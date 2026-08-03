@@ -1,0 +1,114 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> DROP VIEW IF EXISTS v1;
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql> DROP TABLE IF EXISTS employees1;
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql> CREATE TABLE employees1
+    -> (
+    -> Employee_ID INT PRIMARY KEY,
+    -> Employee_Name VARCHAR(30),
+    -> Department VARCHAR(20),
+    -> Salary DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> DESCRIBE employees1;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| Employee_ID   | int           | NO   | PRI | NULL    |       |
+| Employee_Name | varchar(30)   | YES  |     | NULL    |       |
+| Department    | varchar(20)   | YES  |     | NULL    |       |
+| Salary        | decimal(10,2) | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO employees1 VALUES
+    -> (101,'Rahul','HR',25000),
+    -> (102,'Priya','IT',45000),
+    -> (103,'Kamal','ECE',50000),
+    -> (104,'Anitha','CSE',38000),
+    -> (105,'Ramesh','Finance',42000);
+Query OK, 5 rows affected (0.07 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM employees1;
++-------------+---------------+------------+----------+
+| Employee_ID | Employee_Name | Department | Salary   |
++-------------+---------------+------------+----------+
+|         101 | Rahul         | HR         | 25000.00 |
+|         102 | Priya         | IT         | 45000.00 |
+|         103 | Kamal         | ECE        | 50000.00 |
+|         104 | Anitha        | CSE        | 38000.00 |
+|         105 | Ramesh        | Finance    | 42000.00 |
++-------------+---------------+------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE VIEW v1 AS
+    -> SELECT Employee_ID, Salary
+    -> FROM employees1;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> SELECT * FROM v1;
++-------------+----------+
+| Employee_ID | Salary   |
++-------------+----------+
+|         101 | 25000.00 |
+|         102 | 45000.00 |
+|         103 | 50000.00 |
+|         104 | 38000.00 |
+|         105 | 42000.00 |
++-------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO v1
+    -> VALUES
+    -> (106,30000);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> SELECT * FROM v1;
++-------------+----------+
+| Employee_ID | Salary   |
++-------------+----------+
+|         101 | 25000.00 |
+|         102 | 45000.00 |
+|         103 | 50000.00 |
+|         104 | 38000.00 |
+|         105 | 42000.00 |
+|         106 | 30000.00 |
++-------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> DELETE FROM v1
+    -> WHERE Employee_ID=106;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> SELECT * FROM v1;
++-------------+----------+
+| Employee_ID | Salary   |
++-------------+----------+
+|         101 | 25000.00 |
+|         102 | 45000.00 |
+|         103 | 50000.00 |
+|         104 | 38000.00 |
+|         105 | 42000.00 |
++-------------+----------+
+5 rows in set (0.00 sec)
+
+mysql>
