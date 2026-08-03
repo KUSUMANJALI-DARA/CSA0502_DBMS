@@ -1,0 +1,497 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> DROP TABLE IF EXISTS STUDENT;
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> DROP TABLE IF EXISTS FACULTY;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DROP TABLE IF EXISTS COURSE;
+Query OK, 0 rows affected, 1 warning (0.06 sec)
+
+mysql> CREATE TABLE STUDENT
+    -> (
+    -> Reg_no BIGINT PRIMARY KEY,
+    -> Student_Name VARCHAR(30),
+    -> DOB DATE,
+    -> Gender VARCHAR(10),
+    -> Course_ID VARCHAR(10),
+    -> City VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> DESCRIBE STUDENT;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Reg_no       | bigint      | NO   | PRI | NULL    |       |
+| Student_Name | varchar(30) | YES  |     | NULL    |       |
+| DOB          | date        | YES  |     | NULL    |       |
+| Gender       | varchar(10) | YES  |     | NULL    |       |
+| Course_ID    | varchar(10) | YES  |     | NULL    |       |
+| City         | varchar(30) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+6 rows in set (0.09 sec)
+
+mysql> CREATE TABLE FACULTY
+    -> (
+    -> Faculty_ID INT PRIMARY KEY,
+    -> Faculty_Name VARCHAR(30),
+    -> Department VARCHAR(20),
+    -> Joining_Date DATE
+    -> );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> DESCRIBE FACULTY;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Faculty_ID   | int         | NO   | PRI | NULL    |       |
+| Faculty_Name | varchar(30) | YES  |     | NULL    |       |
+| Department   | varchar(20) | YES  |     | NULL    |       |
+| Joining_Date | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> CREATE TABLE COURSE
+    -> (
+    -> Course_ID VARCHAR(10),
+    -> Course_Name VARCHAR(30),
+    -> Hall_No VARCHAR(10)
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> DESCRIBE COURSE;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Course_ID   | varchar(10) | YES  |     | NULL    |       |
+| Course_Name | varchar(30) | YES  |     | NULL    |       |
+| Hall_No     | varchar(10) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO STUDENT VALUES
+    -> (191711341,'Harish','2003-01-15','Male','C001','Salem'),
+    -> (191711342,'Aakash','2002-04-20','Male','C002','Salem'),
+    -> (191711343,'Lakshmi','2003-03-18','Female','C001','Chennai'),
+    -> (191711344,'Ramesh','2002-11-25','Male','C003','Salem'),
+    -> (191711345,'Suresh','2003-08-10','Male','C001','Saligrama'),
+    -> (191711346,'Shyam','2003-02-12','Male','C002','Madurai'),
+    -> (191711347,'Priya','2002-12-30','Female','C003','Salem');
+Query OK, 7 rows affected (0.04 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------------+------------+--------+-----------+-----------+
+| Reg_no    | Student_Name | DOB        | Gender | Course_ID | City      |
++-----------+--------------+------------+--------+-----------+-----------+
+| 191711341 | Harish       | 2003-01-15 | Male   | C001      | Salem     |
+| 191711342 | Aakash       | 2002-04-20 | Male   | C002      | Salem     |
+| 191711343 | Lakshmi      | 2003-03-18 | Female | C001      | Chennai   |
+| 191711344 | Ramesh       | 2002-11-25 | Male   | C003      | Salem     |
+| 191711345 | Suresh       | 2003-08-10 | Male   | C001      | Saligrama |
+| 191711346 | Shyam        | 2003-02-12 | Male   | C002      | Madurai   |
+| 191711347 | Priya        | 2002-12-30 | Female | C003      | Salem     |
++-----------+--------------+------------+--------+-----------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO FACULTY VALUES
+    -> (1,'Mohan','CSE','2012-05-10'),
+    -> (2,'Ravi','ECE','2015-08-12'),
+    -> (3,'Anitha','IT','2013-03-25'),
+    -> (4,'Kumar','MECH','2016-11-01');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM FACULTY;
++------------+--------------+------------+--------------+
+| Faculty_ID | Faculty_Name | Department | Joining_Date |
++------------+--------------+------------+--------------+
+|          1 | Mohan        | CSE        | 2012-05-10   |
+|          2 | Ravi         | ECE        | 2015-08-12   |
+|          3 | Anitha       | IT         | 2013-03-25   |
+|          4 | Kumar        | MECH       | 2016-11-01   |
++------------+--------------+------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO COURSE VALUES
+    -> ('C001','DBMS','H001'),
+    -> ('C002','Java','H002'),
+    -> ('C003','Python','H003'),
+    -> ('C004','Networks','H004');
+Query OK, 4 rows affected (0.05 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM COURSE;
++-----------+-------------+---------+
+| Course_ID | Course_Name | Hall_No |
++-----------+-------------+---------+
+| C001      | DBMS        | H001    |
+| C002      | Java        | H002    |
+| C003      | Python      | H003    |
+| C004      | Networks    | H004    |
++-----------+-------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT Reg_no,Student_Name,DOB
+    -> FROM STUDENT;
++-----------+--------------+------------+
+| Reg_no    | Student_Name | DOB        |
++-----------+--------------+------------+
+| 191711341 | Harish       | 2003-01-15 |
+| 191711342 | Aakash       | 2002-04-20 |
+| 191711343 | Lakshmi      | 2003-03-18 |
+| 191711344 | Ramesh       | 2002-11-25 |
+| 191711345 | Suresh       | 2003-08-10 |
+| 191711346 | Shyam        | 2003-02-12 |
+| 191711347 | Priya        | 2002-12-30 |
++-----------+--------------+------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM STUDENT
+    -> WHERE Gender='Female';
++-----------+--------------+------------+--------+-----------+---------+
+| Reg_no    | Student_Name | DOB        | Gender | Course_ID | City    |
++-----------+--------------+------------+--------+-----------+---------+
+| 191711343 | Lakshmi      | 2003-03-18 | Female | C001      | Chennai |
+| 191711347 | Priya        | 2002-12-30 | Female | C003      | Salem   |
++-----------+--------------+------------+--------+-----------+---------+
+2 rows in set (0.03 sec)
+
+mysql> SELECT *
+    -> FROM STUDENT
+    -> WHERE Course_ID='C001';
++-----------+--------------+------------+--------+-----------+-----------+
+| Reg_no    | Student_Name | DOB        | Gender | Course_ID | City      |
++-----------+--------------+------------+--------+-----------+-----------+
+| 191711341 | Harish       | 2003-01-15 | Male   | C001      | Salem     |
+| 191711343 | Lakshmi      | 2003-03-18 | Female | C001      | Chennai   |
+| 191711345 | Suresh       | 2003-08-10 | Male   | C001      | Saligrama |
++-----------+--------------+------------+--------+-----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM FACULTY
+    -> WHERE Joining_Date<'2014-11-01';
++------------+--------------+------------+--------------+
+| Faculty_ID | Faculty_Name | Department | Joining_Date |
++------------+--------------+------------+--------------+
+|          1 | Mohan        | CSE        | 2012-05-10   |
+|          3 | Anitha       | IT         | 2013-03-25   |
++------------+--------------+------------+--------------+
+2 rows in set (0.03 sec)
+
+mysql> SELECT *
+    -> FROM COURSE
+    -> WHERE Hall_No<>'H001';
++-----------+-------------+---------+
+| Course_ID | Course_Name | Hall_No |
++-----------+-------------+---------+
+| C002      | Java        | H002    |
+| C003      | Python      | H003    |
+| C004      | Networks    | H004    |
++-----------+-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM STUDENT
+    -> WHERE Student_Name LIKE '%sh';
++-----------+--------------+------------+--------+-----------+-----------+
+| Reg_no    | Student_Name | DOB        | Gender | Course_ID | City      |
++-----------+--------------+------------+--------+-----------+-----------+
+| 191711341 | Harish       | 2003-01-15 | Male   | C001      | Salem     |
+| 191711342 | Aakash       | 2002-04-20 | Male   | C002      | Salem     |
+| 191711344 | Ramesh       | 2002-11-25 | Male   | C003      | Salem     |
+| 191711345 | Suresh       | 2003-08-10 | Male   | C001      | Saligrama |
++-----------+--------------+------------+--------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM STUDENT
+    -> WHERE Student_Name LIKE '%sh%';
++-----------+--------------+------------+--------+-----------+-----------+
+| Reg_no    | Student_Name | DOB        | Gender | Course_ID | City      |
++-----------+--------------+------------+--------+-----------+-----------+
+| 191711341 | Harish       | 2003-01-15 | Male   | C001      | Salem     |
+| 191711342 | Aakash       | 2002-04-20 | Male   | C002      | Salem     |
+| 191711343 | Lakshmi      | 2003-03-18 | Female | C001      | Chennai   |
+| 191711344 | Ramesh       | 2002-11-25 | Male   | C003      | Salem     |
+| 191711345 | Suresh       | 2003-08-10 | Male   | C001      | Saligrama |
+| 191711346 | Shyam        | 2003-02-12 | Male   | C002      | Madurai   |
++-----------+--------------+------------+--------+-----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM STUDENT
+    -> WHERE City LIKE '%Sal%';
++-----------+--------------+------------+--------+-----------+-----------+
+| Reg_no    | Student_Name | DOB        | Gender | Course_ID | City      |
++-----------+--------------+------------+--------+-----------+-----------+
+| 191711341 | Harish       | 2003-01-15 | Male   | C001      | Salem     |
+| 191711342 | Aakash       | 2002-04-20 | Male   | C002      | Salem     |
+| 191711344 | Ramesh       | 2002-11-25 | Male   | C003      | Salem     |
+| 191711345 | Suresh       | 2003-08-10 | Male   | C001      | Saligrama |
+| 191711347 | Priya        | 2002-12-30 | Female | C003      | Salem     |
++-----------+--------------+------------+--------+-----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM STUDENT
+    -> WHERE LENGTH(Student_Name)<>6;
++-----------+--------------+------------+--------+-----------+---------+
+| Reg_no    | Student_Name | DOB        | Gender | Course_ID | City    |
++-----------+--------------+------------+--------+-----------+---------+
+| 191711343 | Lakshmi      | 2003-03-18 | Female | C001      | Chennai |
+| 191711346 | Shyam        | 2003-02-12 | Male   | C002      | Madurai |
+| 191711347 | Priya        | 2002-12-30 | Female | C003      | Salem   |
++-----------+--------------+------------+--------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM STUDENT
+    -> WHERE Student_Name LIKE '%am%';
++-----------+--------------+------------+--------+-----------+---------+
+| Reg_no    | Student_Name | DOB        | Gender | Course_ID | City    |
++-----------+--------------+------------+--------+-----------+---------+
+| 191711344 | Ramesh       | 2002-11-25 | Male   | C003      | Salem   |
+| 191711346 | Shyam        | 2003-02-12 | Male   | C002      | Madurai |
++-----------+--------------+------------+--------+-----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    ->
+    -> USE EmployeeDB;
+ERROR 1064 (42000): You have an error in your SQL syntax; checkthe manual that corresponds to your MySQL server version for the right syntax to use near '--------------------------------------------------------------------------------' at line 1
+mysql> USE EmployeeDB;
+Database changed
+mysql> DROP TABLE IF EXISTS STUDENT_MARKS;
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql> DROP TABLE IF EXISTS COURSE;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> CREATE TABLE COURSE
+    -> (
+    -> Course_No VARCHAR(10) PRIMARY KEY,
+    -> Course_Name VARCHAR(30),
+    -> Course_Type VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESCRIBE COURSE;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Course_No   | varchar(10) | NO   | PRI | NULL    |       |
+| Course_Name | varchar(30) | YES  |     | NULL    |       |
+| Course_Type | varchar(20) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE STUDENT_MARKS
+    -> (
+    -> Reg_No BIGINT,
+    -> Student_Name VARCHAR(30),
+    -> Course_No VARCHAR(10),
+    -> Score INT
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> DESCRIBE STUDENT_MARKS;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Reg_No       | bigint      | YES  |     | NULL    |       |
+| Student_Name | varchar(30) | YES  |     | NULL    |       |
+| Course_No    | varchar(10) | YES  |     | NULL    |       |
+| Score        | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.03 sec)
+
+mysql> INSERT INTO COURSE VALUES
+    -> ('C001','Statistics','Theory'),
+    -> ('C002','Programming','Practical'),
+    -> ('C003','Database','Theory'),
+    -> ('C004','Networks','Theory');
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM COURSE;
++-----------+-------------+-------------+
+| Course_No | Course_Name | Course_Type |
++-----------+-------------+-------------+
+| C001      | Statistics  | Theory      |
+| C002      | Programming | Practical   |
+| C003      | Database    | Theory      |
+| C004      | Networks    | Theory      |
++-----------+-------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO STUDENT_MARKS VALUES
+    -> (191711341,'Harish','C001',75),
+    -> (191711341,'Harish','C002',82),
+    -> (191711342,'Aakash','C002',68),
+    -> (191711343,'Lakshmi','C001',55),
+    -> (191711343,'Lakshmi','C002',91),
+    -> (191711344,'Ramesh','C003',48),
+    -> (191711345,'Suresh','C002',72),
+    -> (191711346,'Shyam','C004',88),
+    -> (191711347,'Priya','C001',65),
+    -> (191711347,'Priya','C003',78);
+Query OK, 10 rows affected (0.06 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT_MARKS;
++-----------+--------------+-----------+-------+
+| Reg_No    | Student_Name | Course_No | Score |
++-----------+--------------+-----------+-------+
+| 191711341 | Harish       | C001      |    75 |
+| 191711341 | Harish       | C002      |    82 |
+| 191711342 | Aakash       | C002      |    68 |
+| 191711343 | Lakshmi      | C001      |    55 |
+| 191711343 | Lakshmi      | C002      |    91 |
+| 191711344 | Ramesh       | C003      |    48 |
+| 191711345 | Suresh       | C002      |    72 |
+| 191711346 | Shyam        | C004      |    88 |
+| 191711347 | Priya        | C001      |    65 |
+| 191711347 | Priya        | C003      |    78 |
++-----------+--------------+-----------+-------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT Course_Name, Course_Type
+    -> FROM COURSE
+    -> WHERE Course_Name IN ('Statistics','Programming');
++-------------+-------------+
+| Course_Name | Course_Type |
++-------------+-------------+
+| Statistics  | Theory      |
+| Programming | Practical   |
++-------------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT Course_No, Score
+    -> FROM STUDENT_MARKS
+    -> WHERE Score BETWEEN 50 AND 80;
++-----------+-------+
+| Course_No | Score |
++-----------+-------+
+| C001      |    75 |
+| C002      |    68 |
+| C001      |    55 |
+| C002      |    72 |
+| C001      |    65 |
+| C003      |    78 |
++-----------+-------+
+6 rows in set (0.03 sec)
+
+mysql> SELECT AVG(Score) AS Average_Mark
+    -> FROM STUDENT_MARKS
+    -> WHERE Course_No='C002';
++--------------+
+| Average_Mark |
++--------------+
+|      78.2500 |
++--------------+
+1 row in set (0.04 sec)
+
+mysql> SELECT MAX(Score) AS Maximum_Mark,
+    -> MIN(Score) AS Minimum_Mark
+    -> FROM STUDENT_MARKS
+    -> WHERE Course_No='C002';
++--------------+--------------+
+| Maximum_Mark | Minimum_Mark |
++--------------+--------------+
+|           91 |           68 |
++--------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT Course_No,
+    -> MAX(Score) AS Maximum,
+    -> MIN(Score) AS Minimum,
+    -> AVG(Score) AS Average
+    -> FROM STUDENT_MARKS
+    -> GROUP BY Course_No;
++-----------+---------+---------+---------+
+| Course_No | Maximum | Minimum | Average |
++-----------+---------+---------+---------+
+| C001      |      75 |      55 | 65.0000 |
+| C002      |      91 |      68 | 78.2500 |
+| C003      |      78 |      48 | 63.0000 |
+| C004      |      88 |      88 | 88.0000 |
++-----------+---------+---------+---------+
+4 rows in set (0.03 sec)
+
+mysql> SELECT COURSE.Course_Name,
+    -> AVG(STUDENT_MARKS.Score) AS Average_Mark
+    -> FROM COURSE
+    -> JOIN STUDENT_MARKS
+    -> ON COURSE.Course_No=STUDENT_MARKS.Course_No
+    -> GROUP BY COURSE.Course_Name;
++-------------+--------------+
+| Course_Name | Average_Mark |
++-------------+--------------+
+| Statistics  |      65.0000 |
+| Programming |      78.2500 |
+| Database    |      63.0000 |
+| Networks    |      88.0000 |
++-------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT SUM(Score) AS Total_Score
+    -> FROM STUDENT_MARKS;
++-------------+
+| Total_Score |
++-------------+
+|         722 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COURSE.Course_Name,
+    -> COUNT(STUDENT_MARKS.Reg_No) AS Total_Students
+    -> FROM COURSE
+    -> JOIN STUDENT_MARKS
+    -> ON COURSE.Course_No=STUDENT_MARKS.Course_No
+    -> GROUP BY COURSE.Course_Name;
++-------------+----------------+
+| Course_Name | Total_Students |
++-------------+----------------+
+| Statistics  |              3 |
+| Programming |              4 |
+| Database    |              2 |
+| Networks    |              1 |
++-------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT Student_Name,
+    -> COUNT(Course_No) AS Total_Courses
+    -> FROM STUDENT_MARKS
+    -> GROUP BY Student_Name;
++--------------+---------------+
+| Student_Name | Total_Courses |
++--------------+---------------+
+| Harish       |             2 |
+| Aakash       |             1 |
+| Lakshmi      |             2 |
+| Ramesh       |             1 |
+| Suresh       |             1 |
+| Shyam        |             1 |
+| Priya        |             2 |
++--------------+---------------+
+7 rows in set (0.00 sec)
+
+mysql>
