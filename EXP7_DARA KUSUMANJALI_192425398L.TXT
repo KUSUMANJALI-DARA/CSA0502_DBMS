@@ -1,0 +1,217 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> DROP TABLE IF EXISTS STUDENT;
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> DROP TABLE IF EXISTS FACULTY;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DROP TABLE IF EXISTS COURSE;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> CREATE TABLE STUDENT
+    -> (
+    -> Reg_No BIGINT PRIMARY KEY,
+    -> Student_Name VARCHAR(30),
+    -> Gender VARCHAR(10),
+    -> Mobile_No VARCHAR(15),
+    -> Course_No VARCHAR(10)
+    -> );
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> DESCRIBE STUDENT;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Reg_No       | bigint      | NO   | PRI | NULL    |    |
+| Student_Name | varchar(30) | YES  |     | NULL    |    |
+| Gender       | varchar(10) | YES  |     | NULL    |    |
+| Mobile_No    | varchar(15) | YES  |     | NULL    |    |
+| Course_No    | varchar(10) | YES  |     | NULL    |    |
++--------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE COURSE
+    -> (
+    -> Course_No VARCHAR(10) PRIMARY KEY,
+    -> Course_Name VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> DESCRIBE COURSE;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Course_No   | varchar(10) | NO   | PRI | NULL    |   |
+| Course_Name | varchar(30) | YES  |     | NULL    |   |
++-------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE FACULTY
+    -> (
+    -> Faculty_ID INT PRIMARY KEY,
+    -> Faculty_Name VARCHAR(30),
+    -> Department VARCHAR(20),
+    -> Age INT
+    -> );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> DESCRIBE FACULTY;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Faculty_ID   | int         | NO   | PRI | NULL    |    |
+| Faculty_Name | varchar(30) | YES  |     | NULL    |    |
+| Department   | varchar(20) | YES  |     | NULL    |    |
+| Age          | int         | YES  |     | NULL    |    |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO COURSE VALUES
+    -> ('C001','Statistics'),
+    -> ('C002','Programming'),
+    -> ('C003','Database'),
+    -> ('C004','Networks');
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM COURSE;
++-----------+-------------+
+| Course_No | Course_Name |
++-----------+-------------+
+| C001      | Statistics  |
+| C002      | Programming |
+| C003      | Database    |
+| C004      | Networks    |
++-----------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO STUDENT VALUES
+    -> (191711341,'Harish','Male','9876543210','C001'),
+    -> (191711342,'Aakash','Male','9876543211','C002'),
+    -> (191711343,'Lakshmi','Female','9876543212','C001'),
+    -> (191711344,'Ramesh','Male','9876543213','C003'),
+    -> (191711345,'Suresh','Male','9876543214','C002'),
+    -> (191711346,'Shyam','Male','9876543215','C004'),
+    -> (191711347,'Priya','Female','9876543216','C003'),
+    -> (191711348,'Anitha','Female','9876543217','C002');
+Query OK, 8 rows affected (0.07 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------------+--------+------------+-----------+
+| Reg_No    | Student_Name | Gender | Mobile_No  | Course_No |
++-----------+--------------+--------+------------+-----------+
+| 191711341 | Harish       | Male   | 9876543210 | C001     |
+| 191711342 | Aakash       | Male   | 9876543211 | C002     |
+| 191711343 | Lakshmi      | Female | 9876543212 | C001     |
+| 191711344 | Ramesh       | Male   | 9876543213 | C003     |
+| 191711345 | Suresh       | Male   | 9876543214 | C002     |
+| 191711346 | Shyam        | Male   | 9876543215 | C004     |
+| 191711347 | Priya        | Female | 9876543216 | C003     |
+| 191711348 | Anitha       | Female | 9876543217 | C002     |
++-----------+--------------+--------+------------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> INSERT INTO FACULTY VALUES
+    -> (1,'Mohan','CSE',59),
+    -> (2,'Ravi','ECE',46),
+    -> (3,'Anitha','IT',52),
+    -> (4,'Kumar','MECH',63),
+    -> (5,'Suresh','EEE',57);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM FACULTY;
++------------+--------------+------------+------+
+| Faculty_ID | Faculty_Name | Department | Age  |
++------------+--------------+------------+------+
+|          1 | Mohan        | CSE        |   59 |
+|          2 | Ravi         | ECE        |   46 |
+|          3 | Anitha       | IT         |   52 |
+|          4 | Kumar        | MECH       |   63 |
+|          5 | Suresh       | EEE        |   57 |
++------------+--------------+------------+------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT COURSE.Course_Name,
+    -> COUNT(STUDENT.Reg_No) AS Total_Students
+    -> FROM COURSE
+    -> JOIN STUDENT
+    -> ON COURSE.Course_No = STUDENT.Course_No
+    -> GROUP BY COURSE.Course_Name;
++-------------+----------------+
+| Course_Name | Total_Students |
++-------------+----------------+
+| Statistics  |              2 |
+| Programming |              3 |
+| Database    |              2 |
+| Networks    |              1 |
++-------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT Student_Name,
+    -> COUNT(Course_No) AS Total_Courses
+    -> FROM STUDENT
+    -> GROUP BY Student_Name;
++--------------+---------------+
+| Student_Name | Total_Courses |
++--------------+---------------+
+| Harish       |             1 |
+| Aakash       |             1 |
+| Lakshmi      |             1 |
+| Ramesh       |             1 |
+| Suresh       |             1 |
+| Shyam        |             1 |
+| Priya        |             1 |
+| Anitha       |             1 |
++--------------+---------------+
+8 rows in set (0.03 sec)
+
+mysql> SELECT Student_Name,
+    -> Gender,
+    -> Mobile_No
+    -> FROM STUDENT
+    -> ORDER BY Reg_No ASC;
++--------------+--------+------------+
+| Student_Name | Gender | Mobile_No  |
++--------------+--------+------------+
+| Harish       | Male   | 9876543210 |
+| Aakash       | Male   | 9876543211 |
+| Lakshmi      | Female | 9876543212 |
+| Ramesh       | Male   | 9876543213 |
+| Suresh       | Male   | 9876543214 |
+| Shyam        | Male   | 9876543215 |
+| Priya        | Female | 9876543216 |
+| Anitha       | Female | 9876543217 |
++--------------+--------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM FACULTY
+    -> ORDER BY Age DESC;
++------------+--------------+------------+------+
+| Faculty_ID | Faculty_Name | Department | Age  |
++------------+--------------+------------+------+
+|          4 | Kumar        | MECH       |   63 |
+|          1 | Mohan        | CSE        |   59 |
+|          5 | Suresh       | EEE        |   57 |
+|          3 | Anitha       | IT         |   52 |
+|          2 | Ravi         | ECE        |   46 |
++------------+--------------+------------+------+
+5 rows in set (0.00 sec)
+
+mysql>
