@@ -1,0 +1,241 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> DROP TABLE IF EXISTS SCORE;
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql> DROP TABLE IF EXISTS STUDENT;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DROP TABLE IF EXISTS FACULTY;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DROP TABLE IF EXISTS COURSE;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> CREATE TABLE STUDENT
+    -> (
+    ->     Reg_No BIGINT PRIMARY KEY,
+    ->     Student_Name VARCHAR(30),
+    ->     Course_No VARCHAR(10)
+    -> );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> DESCRIBE STUDENT;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Reg_No       | bigint      | NO   | PRI | NULL    |       |
+| Student_Name | varchar(30) | YES  |     | NULL    |       |
+| Course_No    | varchar(10) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE FACULTY
+    -> (
+    ->     Faculty_ID INT PRIMARY KEY,
+    ->     Faculty_Name VARCHAR(30),
+    ->     Department VARCHAR(20),
+    ->     Course_No VARCHAR(10)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> DESCRIBE FACULTY;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Faculty_ID   | int         | NO   | PRI | NULL    |       |
+| Faculty_Name | varchar(30) | YES  |     | NULL    |       |
+| Department   | varchar(20) | YES  |     | NULL    |       |
+| Course_No    | varchar(10) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE COURSE
+    -> (
+    ->     Course_No VARCHAR(10) PRIMARY KEY,
+    ->     Course_Name VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> DESCRIBE COURSE;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Course_No   | varchar(10) | NO   | PRI | NULL    |       |
+| Course_Name | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> DESCRIBE COURSE;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Course_No   | varchar(10) | NO   | PRI | NULL    |       |
+| Course_Name | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE SCORE
+    -> (
+    ->     Reg_No BIGINT,
+    ->     Course_No VARCHAR(10),
+    ->     Score INT
+    -> );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> DESCRIBE SCORE;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Reg_No    | bigint      | YES  |     | NULL    |       |
+| Course_No | varchar(10) | YES  |     | NULL    |       |
+| Score     | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO COURSE VALUES
+    -> ('C001','Database Management System'),
+    -> ('C002','Programming in C'),
+    -> ('C003','Computer Networks'),
+    -> ('C004','Operating Systems');
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM COURSE;
++-----------+----------------------------+
+| Course_No | Course_Name                |
++-----------+----------------------------+
+| C001      | Database Management System |
+| C002      | Programming in C           |
+| C003      | Computer Networks          |
+| C004      | Operating Systems          |
++-----------+----------------------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO STUDENT VALUES
+    -> (191711341,'Rahul','C001'),
+    -> (191711342,'Priya','C002'),
+    -> (191711343,'Karthik','C003'),
+    -> (191711344,'Anitha','C001'),
+    -> (191711345,'Ramesh','C004');
+Query OK, 5 rows affected (0.07 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------------+-----------+
+| Reg_No    | Student_Name | Course_No |
++-----------+--------------+-----------+
+| 191711341 | Rahul        | C001      |
+| 191711342 | Priya        | C002      |
+| 191711343 | Karthik      | C003      |
+| 191711344 | Anitha       | C001      |
+| 191711345 | Ramesh       | C004      |
++-----------+--------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO FACULTY VALUES
+    -> (1,'Kamal','ECE','C002'),
+    -> (2,'Mohan','CSE','C001'),
+    -> (3,'Ravi','EEE','C003'),
+    -> (4,'Anitha','ECE','C004');
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM FACULTY;
++------------+--------------+------------+-----------+
+| Faculty_ID | Faculty_Name | Department | Course_No |
++------------+--------------+------------+-----------+
+|          1 | Kamal        | ECE        | C002      |
+|          2 | Mohan        | CSE        | C001      |
+|          3 | Ravi         | EEE        | C003      |
+|          4 | Anitha       | ECE        | C004      |
++------------+--------------+------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT * FROM FACULTY;
++------------+--------------+------------+-----------+
+| Faculty_ID | Faculty_Name | Department | Course_No |
++------------+--------------+------------+-----------+
+|          1 | Kamal        | ECE        | C002      |
+|          2 | Mohan        | CSE        | C001      |
+|          3 | Ravi         | EEE        | C003      |
+|          4 | Anitha       | ECE        | C004      |
++------------+--------------+------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO SCORE VALUES
+    -> (191711341,'C001',85),
+    -> (191711342,'C002',78),
+    -> (191711343,'C003',91),
+    -> (191711344,'C001',88);
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM SCORE;
++-----------+-----------+-------+
+| Reg_No    | Course_No | Score |
++-----------+-----------+-------+
+| 191711341 | C001      |    85 |
+| 191711342 | C002      |    78 |
+| 191711343 | C003      |    91 |
+| 191711344 | C001      |    88 |
++-----------+-----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT Faculty_Name, Department
+    -> FROM FACULTY;
++--------------+------------+
+| Faculty_Name | Department |
++--------------+------------+
+| Kamal        | ECE        |
+| Mohan        | CSE        |
+| Ravi         | EEE        |
+| Anitha       | ECE        |
++--------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT
+    -> STUDENT.Student_Name,
+    -> STUDENT.Course_No
+    -> FROM STUDENT
+    -> LEFT JOIN SCORE
+    -> ON STUDENT.Reg_No = SCORE.Reg_No
+    -> WHERE SCORE.Reg_No IS NULL;
++--------------+-----------+
+| Student_Name | Course_No |
++--------------+-----------+
+| Ramesh       | C004      |
++--------------+-----------+
+1 row in set (0.03 sec)
+
+mysql> SELECT
+    -> FACULTY.Faculty_Name,
+    -> FACULTY.Department,
+    -> COURSE.Course_Name
+    -> FROM FACULTY
+    -> INNER JOIN COURSE
+    -> ON FACULTY.Course_No = COURSE.Course_No
+    -> WHERE FACULTY.Department='ECE'
+    -> AND FACULTY.Faculty_Name='Kamal';
++--------------+------------+------------------+
+| Faculty_Name | Department | Course_Name      |
++--------------+------------+------------------+
+| Kamal        | ECE        | Programming in C |
++--------------+------------+------------------+
+1 row in set (0.00 sec)
+
+mysql>
