@@ -1,0 +1,114 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 28
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> SELECT REPLACE('Hello World','World','MySQL') AS Replace_Result;
++----------------+
+| Replace_Result |
++----------------+
+| Hello MySQL    |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT REPEAT('SQL ',3) AS Repeat_Result;
++---------------+
+| Repeat_Result |
++---------------+
+| SQL SQL SQL   |
++---------------+
+1 row in set (0.03 sec)
+
+mysql> SELECT REVERSE('MYSQL') AS Reverse_Result;
++----------------+
+| Reverse_Result |
++----------------+
+| LQSYM          |
++----------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT RIGHT('DATABASE',4) AS Right_Result;
++--------------+
+| Right_Result |
++--------------+
+| BASE         |
++--------------+
+1 row in set (0.03 sec)
+
+mysql> SELECT LEFT('DATABASE',4) AS Left_Result;
++-------------+
+| Left_Result |
++-------------+
+| DATA        |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT RPAD('SQL',8,'*') AS RPAD_Result;
++-------------+
+| RPAD_Result |
++-------------+
+| SQL*****    |
++-------------+
+1 row in set (0.03 sec)
+
+mysql> SELECT LPAD('SQL',8,'*') AS LPAD_Result;
++-------------+
+| LPAD_Result |
++-------------+
+| *****SQL    |
++-------------+
+1 row in set (0.03 sec)
+
+mysql> SELECT ASCII('A') AS ASCII_Result;
++--------------+
+| ASCII_Result |
++--------------+
+|           65 |
++--------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT BIN(10) AS Binary_Result;
++---------------+
+| Binary_Result |
++---------------+
+| 1010          |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT OCT(10) AS Octal_Result;
++--------------+
+| Octal_Result |
++--------------+
+| 12           |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT
+    ->     REPLACE('Hello World','World','MySQL') AS Replace_Result,
+    ->     REPEAT('SQL ',3) AS Repeat_Result,
+    ->     REVERSE('MYSQL') AS Reverse_Result,
+    ->     RIGHT('DATABASE',4) AS Right_Result,
+    ->     LEFT('DATABASE',4) AS Left_Result,
+    ->     RPAD('SQL',8,'*') AS RPAD_Result,
+    ->     LPAD('SQL',8,'*') AS LPAD_Result,
+    ->     ASCII('A') AS ASCII_Result,
+    ->     BIN(10) AS Binary_Result,
+    ->     OCT(10) AS Octal_Result;
++----------------+---------------+----------------+--------------+-------------+-------------+-------------+--------------+---------------+--------------+
+| Replace_Result | Repeat_Result | Reverse_Result | Right_Result | Left_Result | RPAD_Result | LPAD_Result | ASCII_Result | Binary_Result | Octal_Result |
++----------------+---------------+----------------+--------------+-------------+-------------+-------------+--------------+---------------+--------------+
+| Hello MySQL    | SQL SQL SQL   | LQSYM          | BASE | DATA        | SQL*****    | *****SQL    |           65 | 1010          | 12           |
++----------------+---------------+----------------+--------------+-------------+-------------+-------------+--------------+---------------+--------------+
+1 row in set (0.00 sec)
+
+mysql>
