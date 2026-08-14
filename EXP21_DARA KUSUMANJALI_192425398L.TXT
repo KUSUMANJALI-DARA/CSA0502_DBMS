@@ -1,0 +1,177 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 30
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> SELECT CONCAT('Hello',SPACE(5),'World') AS Space_Result;
++-----------------+
+| Space_Result    |
++-----------------+
+| Hello     World |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUBSTRING('DATABASE',1,4) AS Substring_Result;
++------------------+
+| Substring_Result |
++------------------+
+| DATA             |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUBSTR('COMPUTER',1,4) AS Substr_Result;
++---------------+
+| Substr_Result |
++---------------+
+| COMP          |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT UPPER('mysql database') AS Upper_Result;
++----------------+
+| Upper_Result   |
++----------------+
+| MYSQL DATABASE |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LOWER('MYSQL DATABASE') AS Lower_Result;
++----------------+
+| Lower_Result   |
++----------------+
+| mysql database |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LCASE('MYSQL') AS LCase_Result;
++--------------+
+| LCase_Result |
++--------------+
+| mysql        |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT TRIM('   Hello MySQL   ') AS Trim_Result;
++-------------+
+| Trim_Result |
++-------------+
+| Hello MySQL |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT RTRIM('Hello MySQL   ') AS RTRIM_Result;
++--------------+
+| RTRIM_Result |
++--------------+
+| Hello MySQL  |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LTRIM('   Hello MySQL') AS LTRIM_Result;
++--------------+
+| LTRIM_Result |
++--------------+
+| Hello MySQL  |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LENGTH('DATABASE') AS Length_Result;
++---------------+
+| Length_Result |
++---------------+
+|             8 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT BIT_LENGTH('ABC') AS Bit_Length_Result;
++-------------------+
+| Bit_Length_Result |
++-------------------+
+|                24 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT CHAR_LENGTH('DATABASE') AS Char_Length_Result;
++--------------------+
+| Char_Length_Result |
++--------------------+
+|                  8 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT CONCAT('My','SQL') AS Concat_Result;
++---------------+
+| Concat_Result |
++---------------+
+| MySQL         |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT INSTR('MySQL Database','Database') AS Instr_Result;
++--------------+
+| Instr_Result |
++--------------+
+|            7 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LOCATE('Database','MySQL Database') AS Locate_Result;
++---------------+
+| Locate_Result |
++---------------+
+|             7 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MID('DATABASE',1,4) AS MID_Result;
++------------+
+| MID_Result |
++------------+
+| DATA       |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT POSITION('SQL' IN 'MySQL') AS Position_Result;
++-----------------+
+| Position_Result |
++-----------------+
+|               3 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT
+    ->     CONCAT('Hello',SPACE(5),'World') AS Space_Result,
+    ->     SUBSTRING('DATABASE',1,4) AS Substring_Result,
+    ->     SUBSTR('COMPUTER',1,4) AS Substr_Result,
+    ->     UPPER('mysql database') AS Upper_Result,
+    ->     LOWER('MYSQL DATABASE') AS Lower_Result,
+    ->     LCASE('MYSQL') AS LCase_Result,
+    ->     TRIM('   Hello MySQL   ') AS Trim_Result,
+    ->     RTRIM('Hello MySQL   ') AS RTRIM_Result,
+    ->     LTRIM('   Hello MySQL') AS LTRIM_Result,
+    ->     LENGTH('DATABASE') AS Length_Result,
+    ->     BIT_LENGTH('ABC') AS Bit_Length_Result,
+    ->     CHAR_LENGTH('DATABASE') AS Char_Length_Result,
+    ->     CONCAT('My','SQL') AS Concat_Result,
+    ->     INSTR('MySQL Database','Database') AS Instr_Result,
+    ->     LOCATE('Database','MySQL Database') AS Locate_Result,
+    ->     MID('DATABASE',1,4) AS MID_Result,
+    ->     POSITION('SQL' IN 'MySQL') AS Position_Result;
++-----------------+------------------+---------------+----------------+----------------+--------------+-------------+--------------+--------------+---------------+-------------------+--------------------+---------------+--------------+---------------+------------+-----------------+
+| Space_Result    | Substring_Result | Substr_Result | Upper_Result   | Lower_Result   | LCase_Result | Trim_Result | RTRIM_Result | LTRIM_Result | Length_Result | Bit_Length_Result | Char_Length_Result | Concat_Result | Instr_Result | Locate_Result | MID_Result | Position_Result |
++-----------------+------------------+---------------+----------------+----------------+--------------+-------------+--------------+--------------+---------------+-------------------+--------------------+---------------+--------------+---------------+------------+-----------------+
+| Hello     World | DATA             | COMP          | MYSQL DATABASE | mysql database | mysql        | Hello MySQL | Hello MySQL  | Hello MySQL  |             8 |                24 |         8 | MySQL         |            7 |             7 | DATA       |               3 |
++-----------------+------------------+---------------+----------------+----------------+--------------+-------------+--------------+--------------+---------------+-------------------+--------------------+---------------+--------------+---------------+------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql>
