@@ -1,0 +1,124 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 19
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> DELIMITER $$
+mysql>
+mysql> CREATE FUNCTION Income_Level(monthly_value INT)
+    -> RETURNS VARCHAR(20)
+    -> DETERMINISTIC
+    -> BEGIN
+    ->     DECLARE income_level VARCHAR(20);
+    ->
+    ->     CASE
+    ->         WHEN monthly_value <= 4000 THEN
+    ->             SET income_level = 'Low Income';
+    ->
+    ->         WHEN monthly_value <= 5000 THEN
+    ->             SET income_level = 'Avg Income';
+    ->
+    ->         ELSE
+    ->             SET income_level = 'High Income';
+    ->     END CASE;
+    ->
+    ->     RETURN income_level;
+    -> END$$
+Query OK, 0 rows affected (0.06 sec)
+
+mysql>
+mysql> SELECT Income_Level(3500);
+    -> SELECT Income_Level(4500);
+    -> SELECT Income_Level(7000);
+    -> DELIMITER $$
++--------------------+
+| Income_Level(3500) |
++--------------------+
+| Low Income         |
++--------------------+
+1 row in set (0.00 sec)
+
++--------------------+
+| Income_Level(4500) |
++--------------------+
+| Avg Income         |
++--------------------+
+1 row in set (0.01 sec)
+
++--------------------+
+| Income_Level(7000) |
++--------------------+
+| High Income        |
++--------------------+
+1 row in set (0.02 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; checkthe manual that corresponds to your MySQL server version for the right syntax to use near 'DELIMITER' at line 1
+mysql>
+mysql> CREATE FUNCTION Loop_Income()
+    -> RETURNS INT
+    -> DETERMINISTIC
+    -> BEGIN
+    ->     DECLARE income INT DEFAULT 1000;
+    ->
+    ->     myloop: LOOP
+    ->
+    ->         SET income = income + 500;
+    ->
+    ->         IF income < 4000 THEN
+    ->             ITERATE myloop;
+    ->         END IF;
+    ->
+    ->         LEAVE myloop;
+    ->
+    ->     END LOOP;
+    ->
+    ->     RETURN income;
+    -> END$$
+Query OK, 0 rows affected (0.06 sec)
+
+mysql>
+mysql> DELIMITER ;
+mysql> DELIMITER $$
+mysql>
+mysql> CREATE FUNCTION Loop_Income()
+    -> RETURNS INT
+    -> DETERMINISTIC
+    -> BEGIN
+    ->     DECLARE income INT DEFAULT 1000;
+    ->
+    ->     myloop: LOOP
+    ->
+    ->         SET income = income + 500;
+    ->
+    ->         IF income < 4000 THEN
+    ->             ITERATE myloop;
+    ->         END IF;
+    ->
+    ->         LEAVE myloop;
+    ->
+    ->     END LOOP;
+    ->
+    ->     RETURN income;
+    -> END$$
+ERROR 1304 (42000): FUNCTION Loop_Income already exists
+mysql>
+mysql> DELIMITER ;
+mysql> SELECT Loop_Income();
++---------------+
+| Loop_Income() |
++---------------+
+|          4000 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql>

@@ -1,0 +1,96 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 16
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> DROP TABLE IF EXISTS DBMS_Stud;
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql> CREATE TABLE DBMS_Stud
+    -> (
+    ->     RegNo INT AUTO_INCREMENT PRIMARY KEY,
+    ->     StudentName VARCHAR(30),
+    ->     Gender CHAR(1),
+    ->     City VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESCRIBE DBMS_Stud;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| RegNo       | int         | NO   | PRI | NULL    | auto_increment |
+| StudentName | varchar(30) | YES  |     | NULL    |                |
+| Gender      | char(1)     | YES  |     | NULL    |                |
+| City        | varchar(20) | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> INSERT INTO DBMS_Stud(StudentName, Gender, City)
+    -> VALUES
+    -> ('Rahul','M','Chennai'),
+    -> ('Priya','F','Hyderabad'),
+    -> ('Kamal','M','Bangalore'),
+    -> ('Anitha','F','Coimbatore');
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM DBMS_Stud;
++-------+-------------+--------+------------+
+| RegNo | StudentName | Gender | City       |
++-------+-------------+--------+------------+
+|     1 | Rahul       | M      | Chennai    |
+|     2 | Priya       | F      | Hyderabad  |
+|     3 | Kamal       | M      | Bangalore  |
+|     4 | Anitha      | F      | Coimbatore |
++-------+-------------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO DBMS_Stud
+    -> (RegNo, StudentName, Gender, City)
+    -> VALUES
+    -> (100,'Ramesh','M','Madurai');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> SELECT * FROM DBMS_Stud;
++-------+-------------+--------+------------+
+| RegNo | StudentName | Gender | City       |
++-------+-------------+--------+------------+
+|     1 | Rahul       | M      | Chennai    |
+|     2 | Priya       | F      | Hyderabad  |
+|     3 | Kamal       | M      | Bangalore  |
+|     4 | Anitha      | F      | Coimbatore |
+|   100 | Ramesh      | M      | Madurai    |
++-------+-------------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE DBMS_Stud
+    -> MODIFY RegNo INT NOT NULL;
+Query OK, 5 rows affected (0.15 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SHOW CREATE TABLE DBMS_Stud;
++-----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table     | Create Table                                                          |
++-----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| DBMS_Stud | CREATE TABLE `dbms_stud` (
+  `RegNo` int NOT NULL,
+  `StudentName` varchar(30) DEFAULT NULL,
+  `Gender` char(1) DEFAULT NULL,
+  `City` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`RegNo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++-----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql>

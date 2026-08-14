@@ -1,0 +1,77 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 21
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> CREATE USER 'student1'@'localhost'
+    -> IDENTIFIED BY 'student123';
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> SELECT User, Host
+    -> FROM mysql.user;
++------------------+-----------+
+| User             | Host      |
++------------------+-----------+
+| mysql.infoschema | localhost |
+| mysql.session    | localhost |
+| mysql.sys        | localhost |
+| root             | localhost |
+| student1         | localhost |
++------------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> GRANT USAGE
+    -> ON *.*
+    -> TO 'student1'@'localhost';
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> GRANT CREATE
+    -> ON EmployeeDB.*
+    -> TO 'student1'@'localhost';
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> GRANT ALL PRIVILEGES
+    -> ON EmployeeDB.*
+    -> TO 'student1'@'localhost';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SHOW GRANTS FOR 'student1'@'localhost';
++------------------------------------------------------------------+
+| Grants for student1@localhost                                    |
++------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `student1`@`localhost`                     |
+| GRANT ALL PRIVILEGES ON `employeedb`.* TO `student1`@`localhost` |
++------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> REVOKE CREATE
+    -> ON EmployeeDB.*
+    -> FROM 'student1'@'localhost';
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SHOW GRANTS FOR 'student1'@'localhost';
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Grants for student1@localhost                                                                                                    |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `student1`@`localhost`                                                                                                    |
+| GRANT SELECT, INSERT, UPDATE, DELETE, DROP, REFERENCES, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EVENT, TRIGGER ON `employeedb`.* TO `student1`@`localhost` |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql>

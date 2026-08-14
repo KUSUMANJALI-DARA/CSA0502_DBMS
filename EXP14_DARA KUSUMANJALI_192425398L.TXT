@@ -1,0 +1,155 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 20
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> DROP TABLE IF EXISTS CLASS;
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql> CREATE TABLE CLASS
+    -> (
+    ->     Name VARCHAR(20),
+    ->     ID INT PRIMARY KEY
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> DESCRIBE CLASS;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Name  | varchar(20) | YES  |     | NULL    |       |
+| ID    | int         | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO CLASS VALUES
+    -> ('Arun',1),
+    -> ('Bharath',2),
+    -> ('Charles',3),
+    -> ('David',4),
+    -> ('Alpha',5);
+Query OK, 5 rows affected (0.06 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CLASS;
++---------+----+
+| Name    | ID |
++---------+----+
+| Arun    |  1 |
+| Bharath |  2 |
+| Charles |  3 |
+| David   |  4 |
+| Alpha   |  5 |
++---------+----+
+5 rows in set (0.00 sec)
+
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> UPDATE CLASS
+    -> SET Name='Bravo'
+    -> WHERE ID=5;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM CLASS;
++---------+----+
+| Name    | ID |
++---------+----+
+| Arun    |  1 |
+| Bharath |  2 |
+| Charles |  3 |
+| David   |  4 |
+| Bravo   |  5 |
++---------+----+
+5 rows in set (0.00 sec)
+
+mysql> SAVEPOINT A;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO CLASS
+    -> VALUES
+    -> ('Uppal',6);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM CLASS;
++---------+----+
+| Name    | ID |
++---------+----+
+| Arun    |  1 |
+| Bharath |  2 |
+| Charles |  3 |
+| David   |  4 |
+| Bravo   |  5 |
+| Uppal   |  6 |
++---------+----+
+6 rows in set (0.00 sec)
+
+mysql> SAVEPOINT B;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> INSERT INTO CLASS
+    -> VALUES
+    -> ('Balu',7);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM CLASS;
++---------+----+
+| Name    | ID |
++---------+----+
+| Arun    |  1 |
+| Bharath |  2 |
+| Charles |  3 |
+| David   |  4 |
+| Bravo   |  5 |
+| Uppal   |  6 |
+| Balu    |  7 |
++---------+----+
+7 rows in set (0.00 sec)
+
+mysql> SAVEPOINT C;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> ROLLBACK TO B;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SELECT * FROM CLASS;
++---------+----+
+| Name    | ID |
++---------+----+
+| Arun    |  1 |
+| Bharath |  2 |
+| Charles |  3 |
+| David   |  4 |
+| Bravo   |  5 |
+| Uppal   |  6 |
++---------+----+
+6 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> SELECT * FROM CLASS;
++---------+----+
+| Name    | ID |
++---------+----+
+| Arun    |  1 |
+| Bharath |  2 |
+| Charles |  3 |
+| David   |  4 |
+| Bravo   |  5 |
+| Uppal   |  6 |
++---------+----+
+6 rows in set (0.00 sec)
+
+mysql>
