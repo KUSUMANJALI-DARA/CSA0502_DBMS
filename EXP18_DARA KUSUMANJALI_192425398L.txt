@@ -1,0 +1,104 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 26
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> DROP TABLE IF EXISTS employees;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql>
+mysql> CREATE TABLE employees
+    -> (
+    ->     id INT,
+    ->     Name VARCHAR(100),
+    ->     email VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> INSERT INTO employees
+    -> VALUES
+    -> (1, 'Harry Potter', 'pharry@warnerbros.com'),
+    -> (2, 'Clark Kent', 'kclark@dccomics.com'),
+    -> (3, 'Tony Stark', 'stony@marvel.com');
+Query OK, 3 rows affected (0.07 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> DELIMITER $$
+mysql>
+mysql> CREATE PROCEDURE build_email_list
+    -> (
+    ->     INOUT email_list VARCHAR(4000)
+    -> )
+    -> BEGIN
+    ->
+    ->     DECLARE v_finished INTEGER DEFAULT 0;
+    ->     DECLARE v_email VARCHAR(100) DEFAULT '';
+    ->
+    ->     DECLARE email_cursor CURSOR FOR
+    ->         SELECT email FROM employees;
+    ->
+    ->     DECLARE CONTINUE HANDLER FOR NOT FOUND
+    ->         SET v_finished = 1;
+    ->
+    ->     OPEN email_cursor;
+    ->
+    ->     get_email: LOOP
+    ->
+    ->         FETCH email_cursor INTO v_email;
+    ->
+    ->         IF v_finished = 1 THEN
+    ->             LEAVE get_email;
+    ->         END IF;
+    ->
+    ->         SET email_list = CONCAT(email_list, v_email, ';');
+    ->
+    ->     END LOOP get_email;
+    ->
+    ->     CLOSE email_cursor;
+    ->
+    -> END$$
+Query OK, 0 rows affected (0.08 sec)
+
+mysql>
+mysql> DELIMITER ;
+mysql> SET @email_list = '';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL build_email_list(@email_list);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SELECT @email_list AS Email_List;
++-------------------------------------------------------------+
+| Email_List                                                  |
++-------------------------------------------------------------+
+| pharry@warnerbros.com;kclark@dccomics.com;stony@marvel.com; |
++-------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SET @email_list = '';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> CALL build_email_list(@email_list);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> SELECT @email_list AS Email_List;
++-------------------------------------------------------------+
+| Email_List                                                  |
++-------------------------------------------------------------+
+| pharry@warnerbros.com;kclark@dccomics.com;stony@marvel.com; |
++-------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql>
