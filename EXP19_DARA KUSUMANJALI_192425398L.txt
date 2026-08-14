@@ -1,0 +1,114 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 27
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> DROP TABLE IF EXISTS STUDENT;
+Query OK, 0 rows affected (0.08 sec)
+
+mysql>
+mysql> CREATE TABLE STUDENT
+    -> (
+    ->     ID INT PRIMARY KEY,
+    ->     Name VARCHAR(50),
+    ->     Email VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO STUDENT VALUES
+    -> (1, 'Rahul', 'rahul@gmail.com'),
+    -> (2, 'Priya', 'priya@gmail.com'),
+    -> (3, 'Kamal', 'kamal@gmail.com');
+Query OK, 3 rows affected (0.06 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++----+-------+-----------------+
+| ID | Name  | Email           |
++----+-------+-----------------+
+|  1 | Rahul | rahul@gmail.com |
+|  2 | Priya | priya@gmail.com |
+|  3 | Kamal | kamal@gmail.com |
++----+-------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> DROP TABLE IF EXISTS EMPLOYEES_AUDIT;
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql>
+mysql> CREATE TABLE EMPLOYEES_AUDIT
+    -> (
+    ->     ID INT,
+    ->     Name VARCHAR(50),
+    ->     Email VARCHAR(100),
+    ->     Action_Time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> DELIMITER $$
+mysql>
+mysql> CREATE TRIGGER student_before_update
+    -> BEFORE UPDATE ON STUDENT
+    -> FOR EACH ROW
+    -> BEGIN
+    ->
+    ->     INSERT INTO EMPLOYEES_AUDIT
+    ->     (ID, Name, Email)
+    ->     VALUES
+    ->     (OLD.ID, OLD.Name, OLD.Email);
+    ->
+    -> END$$
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> DELIMITER ;
+mysql> UPDATE STUDENT
+    -> SET Email = 'rahul2026@gmail.com'
+    -> WHERE ID = 1;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++----+-------+---------------------+
+| ID | Name  | Email               |
++----+-------+---------------------+
+|  1 | Rahul | rahul2026@gmail.com |
+|  2 | Priya | priya@gmail.com     |
+|  3 | Kamal | kamal@gmail.com     |
++----+-------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEES_AUDIT;
++------+-------+-----------------+---------------------+
+| ID   | Name  | Email           | Action_Time         |
++------+-------+-----------------+---------------------+
+|    1 | Rahul | rahul@gmail.com | 2026-08-14 09:14:14 |
++------+-------+-----------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> SHOW TRIGGERS;
++-----------------------+--------+---------+-----------------------------------------------------------------------------------------------------------------+--------+------------------------+-----------------------------------------------------------------------------------------------------------------------+----------------+----------------------+----------------------+--------------------+
+| Trigger               | Event  | Table   | Statement                        | Timing | Created                | sql_mode                                             | Definer        | character_set_client | collation_connection | Database Collation |
++-----------------------+--------+---------+-----------------------------------------------------------------------------------------------------------------+--------+------------------------+-----------------------------------------------------------------------------------------------------------------------+----------------+----------------------+----------------------+--------------------+
+| student_before_update | UPDATE | student | BEGIN
+
+    INSERT INTO EMPLOYEES_AUDIT
+    (ID, Name, Email)
+    VALUES
+    (OLD.ID, OLD.Name, OLD.Email);
+
+END | BEFORE | 2026-08-14 09:14:07.71 | ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION | root@localhost | cp850                | cp850_general_ci     | utf8mb4_0900_ai_ci |
++-----------------------+--------+---------+-----------------------------------------------------------------------------------------------------------------+--------+------------------------+-----------------------------------------------------------------------------------------------------------------------+----------------+----------------------+----------------------+--------------------+
+1 row in set (0.09 sec)
+
+mysql> -
