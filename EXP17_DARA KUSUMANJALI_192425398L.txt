@@ -1,0 +1,149 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 25
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> DROP TABLE IF EXISTS customers;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> CREATE TABLE customers
+    -> (
+    ->     CustomerNumber INT PRIMARY KEY,
+    ->     CustomerName VARCHAR(30),
+    ->     CreditLimit DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO customers VALUES
+    -> (101,'Arun',75000),
+    -> (102,'Priya',30000),
+    -> (103,'Kamal',5000),
+    -> (104,'Anitha',120000),
+    -> (105,'Ramesh',15000);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM customers;
++----------------+--------------+-------------+
+| CustomerNumber | CustomerName | CreditLimit |
++----------------+--------------+-------------+
+|            101 | Arun         |    75000.00 |
+|            102 | Priya        |    30000.00 |
+|            103 | Kamal        |     5000.00 |
+|            104 | Anitha       |   120000.00 |
+|            105 | Ramesh       |    15000.00 |
++----------------+--------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> DELIMITER $$
+mysql>
+mysql> CREATE FUNCTION GetCustomerLevel(p_customer_number INT)
+    -> RETURNS VARCHAR(20)
+    -> DETERMINISTIC
+    -> BEGIN
+    ->     DECLARE v_credit_limit DECIMAL(10,2);
+    ->     DECLARE customer_level VARCHAR(20);
+    ->
+    ->     SELECT CreditLimit
+    ->     INTO v_credit_limit
+    ->     FROM customers
+    ->     WHERE CustomerNumber = p_customer_number;
+    ->
+    ->     IF v_credit_limit > 50000 THEN
+    ->         SET customer_level = 'PLATINUM';
+    ->
+    ->     ELSEIF v_credit_limit >= 10000
+    ->            AND v_credit_limit <= 50000 THEN
+    ->         SET customer_level = 'GOLD';
+    ->
+    ->     ELSE
+    ->         SET customer_level = 'SILVER';
+    ->     END IF;
+    ->
+    ->     RETURN customer_level;
+    -> END$$
+ERROR 1304 (42000): FUNCTION GetCustomerLevel already exists
+mysql>
+mysql> DELIMITER ;
+mysql> SELECT GetCustomerLevel(101) AS Customer_Level;
++----------------+
+| Customer_Level |
++----------------+
+| PLATINUM       |
++----------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT GetCustomerLevel(102) AS Customer_Level;
++----------------+
+| Customer_Level |
++----------------+
+| GOLD           |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT GetCustomerLevel(103) AS Customer_Level;
++----------------+
+| Customer_Level |
++----------------+
+| SILVER         |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> DELIMITER $$
+mysql>
+mysql> CREATE PROCEDURE Factorial(
+    ->     IN n INT,
+    ->     OUT result BIGINT
+    -> )
+    -> BEGIN
+    ->
+    ->     DECLARE temp_result BIGINT;
+    ->
+    ->     IF n <= 1 THEN
+    ->         SET result = 1;
+    ->
+    ->     ELSE
+    ->         CALL Factorial(n - 1, temp_result);
+    ->         SET result = n * temp_result;
+    ->     END IF;
+    ->
+    -> END$$
+ERROR 1304 (42000): PROCEDURE Factorial already exists
+mysql>
+mysql> DELIMITER ;
+mysql> CALL Factorial(5, @result);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> SELECT @result AS Factorial;
++-----------+
+| Factorial |
++-----------+
+|       120 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> CALL Factorial(6, @result);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> SELECT @result AS Factorial;
++-----------+
+| Factorial |
++-----------+
+|       720 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql>

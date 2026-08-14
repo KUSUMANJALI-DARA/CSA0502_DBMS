@@ -1,0 +1,170 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 22
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> DROP TABLE IF EXISTS student_info;
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql>
+mysql> CREATE TABLE student_info
+    -> (
+    ->     RegNo INT,
+    ->     Student_Name VARCHAR(30),
+    ->     Gender CHAR(1),
+    ->     City VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> INSERT INTO student_info VALUES
+    -> (101,'Rahul','M','Chennai'),
+    -> (102,'Priya','F','Hyderabad'),
+    -> (103,'Kamal','M','Bangalore'),
+    -> (104,'Anitha','F','Coimbatore'),
+    -> (105,'Ramesh','M','Madurai');
+Query OK, 5 rows affected (0.07 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM student_info;
++-------+--------------+--------+------------+
+| RegNo | Student_Name | Gender | City       |
++-------+--------------+--------+------------+
+|   101 | Rahul        | M      | Chennai    |
+|   102 | Priya        | F      | Hyderabad  |
+|   103 | Kamal        | M      | Bangalore  |
+|   104 | Anitha       | F      | Coimbatore |
+|   105 | Ramesh       | M      | Madurai    |
++-------+--------------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> DELIMITER $$
+mysql>
+mysql> CREATE PROCEDURE GetStudentInfo()
+    -> BEGIN
+    ->     SELECT * FROM student_info;
+    -> END$$
+Query OK, 0 rows affected (0.07 sec)
+
+mysql>
+mysql> DELIMITER ;
+mysql> CALL GetStudentInfo();
++-------+--------------+--------+------------+
+| RegNo | Student_Name | Gender | City       |
++-------+--------------+--------+------------+
+|   101 | Rahul        | M      | Chennai    |
+|   102 | Priya        | F      | Hyderabad  |
+|   103 | Kamal        | M      | Bangalore  |
+|   104 | Anitha       | F      | Coimbatore |
+|   105 | Ramesh       | M      | Madurai    |
++-------+--------------+--------+------------+
+5 rows in set (0.03 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DROP TABLE IF EXISTS customers;
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql>
+mysql> CREATE TABLE customers
+    -> (
+    ->     CustomerNumber INT PRIMARY KEY,
+    ->     CustomerName VARCHAR(30),
+    ->     CreditLimit DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> INSERT INTO customers VALUES
+    -> (101,'Arun',120000),
+    -> (102,'Priya',75000),
+    -> (103,'Kamal',30000),
+    -> (104,'Anitha',150000),
+    -> (105,'Ramesh',45000);
+Query OK, 5 rows affected (0.07 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM customers;
++----------------+--------------+-------------+
+| CustomerNumber | CustomerName | CreditLimit |
++----------------+--------------+-------------+
+|            101 | Arun         |   120000.00 |
+|            102 | Priya        |    75000.00 |
+|            103 | Kamal        |    30000.00 |
+|            104 | Anitha       |   150000.00 |
+|            105 | Ramesh       |    45000.00 |
++----------------+--------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> DELIMITER $$
+mysql>
+mysql> CREATE PROCEDURE GetCustomerLevel(
+    ->     IN p_customernumber INT,
+    ->     OUT p_customerlevel VARCHAR(20)
+    -> )
+    -> BEGIN
+    ->     DECLARE v_creditlimit DECIMAL(10,2);
+    ->
+    ->     SELECT CreditLimit
+    ->     INTO v_creditlimit
+    ->     FROM customers
+    ->     WHERE CustomerNumber = p_customernumber;
+    ->
+    ->     IF v_creditlimit >= 100000 THEN
+    ->         SET p_customerlevel = 'PLATINUM';
+    ->
+    ->     ELSEIF v_creditlimit >= 50000 THEN
+    ->         SET p_customerlevel = 'GOLD';
+    ->
+    ->     ELSE
+    ->         SET p_customerlevel = 'SILVER';
+    ->     END IF;
+    -> END$$
+Query OK, 0 rows affected (0.07 sec)
+
+mysql>
+mysql> DELIMITER ;
+mysql> CALL GetCustomerLevel(101, @level);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT @level AS Customer_Level;
++----------------+
+| Customer_Level |
++----------------+
+| PLATINUM       |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> CALL GetCustomerLevel(102, @level);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>
+mysql> SELECT @level AS Customer_Level;
++----------------+
+| Customer_Level |
++----------------+
+| GOLD           |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> CALL GetCustomerLevel(103, @level);
+Query OK, 1 row affected (0.00 sec)
+
+mysql>
+mysql> SELECT @level AS Customer_Level;
++----------------+
+| Customer_Level |
++----------------+
+| SILVER         |
++----------------+
+1 row in set (0.00 sec)
+
+mysql>
